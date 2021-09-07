@@ -2,15 +2,30 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import math as m
+import os
 
-numframes = 100
+def cos(x):
+    return np.cos(x)
+def sin(x):
+    return np.sin(x)
+def tan(x):
+    return np.tan(x)
+def exp(x):
+    return np.exp(x)
+pi = m.pi
+
+filename = input("filename:")
+filename += '.'+input("filetype:")
+numframes = int(input("# of frames:"))
+func = input("f(z,t)=")
+
 numcols, numrows = 540, 540
 w, h = 5, 5
-numframes = 200
 fps = 30
-filename = 'rainbowsin.mp4'
 
-fig = plt.figure()
+fig = plt.figure(figsize=(w, h), dpi=numcols/w)
+direc = os.getcwd()
+
 
 x = np.arange(-w/2,w/2,w/numcols)
 y = np.arange(-h/2,h/2,h/numrows)
@@ -23,8 +38,9 @@ ims = []
 for i in range(numframes):
     t = i/numframes
     print(i,"of",numframes,end='\r')
-    f = z.real + np.sin(2*np.pi*(z.imag+t))
-    plt.axis('scaled')
+    exec("f="+func)
+    plt.axis('off')
+    fig.tight_layout()
     im = plt.pcolormesh(x,y,np.mod(f,1),animated = True,vmin = 0,vmax = 1,
                         shading = 'auto',cmap = 'hsv')
     ims.append([im])
@@ -32,4 +48,4 @@ for i in range(numframes):
 ani = animation.ArtistAnimation(fig, ims, interval=1000/fps)
 
 ani.save(filename)
-plt.show()
+os.system(filename)
