@@ -59,7 +59,6 @@ with imageio.get_writer(direc+filename+'.gif', mode='I',fps = myfps) as writer:
         t = k/numframes
         print(funstr[0:int(t*len(funstr))+1],end='\r')
         exec("f ="+func)
-        if is_all_zero = np.all((arr == 0))
         r = 1-bump(f,1.3)
         g = 1-bump(f+2/3,1.3)
         b = 1-bump(f+1/3,1.3)
